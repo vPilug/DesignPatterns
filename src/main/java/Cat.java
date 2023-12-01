@@ -10,6 +10,7 @@ public class Cat extends DonationHandler {
     private final boolean sortHair;
     private final boolean bigCat;
     private final String catType;
+    private static boolean isMatched;
 
     public Cat(String name, String furColor, String eyeColor, int monthsFromBirth, boolean female, boolean active, boolean sortHair, boolean bigCat, String catType) {
         this.name = name;
@@ -21,6 +22,14 @@ public class Cat extends DonationHandler {
         this.sortHair = sortHair;
         this.bigCat = bigCat;
         this.catType = catType;
+        isMatched = false;
+    }
+    public static boolean isMatched() {
+        return isMatched;
+    }
+
+    public void setMatched(boolean matched) {
+        isMatched = matched;
     }
 
 
@@ -36,8 +45,10 @@ public class Cat extends DonationHandler {
                 && (isNull(client.getSortHair()) || Boolean.compare(client.getSortHair(), this.sortHair) == 0)
                 && (isNull(client.getCatType()) || client.getCatType().equalsIgnoreCase(this.catType))) {
             System.out.println("We find a cat for you. The cat's name is " + name);
+            setMatched(true);
         } else {
             System.out.println("You didn't match with " + name);
+            setMatched(false);
             super.match(client);
         }
     }
